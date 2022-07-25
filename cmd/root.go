@@ -52,7 +52,6 @@ func Execute() {
 func addSubCommandPalettes() {
 	rootCmd.AddCommand(campaign.CampaignCmd)
 	rootCmd.AddCommand(project.ProjectCmd)
-	//rootCmd.AddCommand(authorization.AuthorizationCmd)
 	rootCmd.AddCommand(authorization.ConfigureCmd)
 	rootCmd.AddCommand(authorization.AuthenticateCmd)
 	rootCmd.AddCommand(panic.PanicCmd)
@@ -61,9 +60,9 @@ func addSubCommandPalettes() {
 func init() {
 	cobra.OnInitialize(initConfig)
 
-	rootCmd.PersistentFlags().StringVarP(&Token, "token", "", "", "authorization token")
-	rootCmd.PersistentFlags().StringVarP(&Account_id, "account-id", "", "", "account id")
-	rootCmd.PersistentFlags().StringVarP(&Account_environment_id, "account-environment-id", "", "", "account env id")
+	rootCmd.PersistentFlags().StringVarP(&Token, "token", "t", "", "authorization token")
+	rootCmd.PersistentFlags().StringVarP(&Account_id, "account-id", "a", "", "account id")
+	rootCmd.PersistentFlags().StringVarP(&Account_environment_id, "account-environment-id", "e", "", "account env id")
 	rootCmd.PersistentFlags().StringVarP(&Output_format, "output-format", "f", "table", "output format")
 	viper.BindPFlag("token", rootCmd.PersistentFlags().Lookup("token"))
 	viper.BindPFlag("account_id", rootCmd.PersistentFlags().Lookup("account-id"))
@@ -76,9 +75,6 @@ func init() {
 
 	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "", "config file (default is $HOME/.flagship/credentials.yaml)")
 
-	// Cobra also supports local flags, which will only run
-	// when this action is called directly.
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	addSubCommandPalettes()
 }
 
@@ -97,7 +93,6 @@ func initConfig() {
 	}
 
 	// read in environment variables that match
-
 	// If a config file is found, read it in.
 	viper.MergeInConfig()
 }
